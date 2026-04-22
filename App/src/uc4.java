@@ -1,10 +1,14 @@
+package com.apps.quantitymeasurement;
 
-public class UC3 {
+public class QuantityMeasurementApp {
 
-    // Step 1: Enum for units
+    // Updated enum with new units
     public enum LengthUnit {
+
         FEET(1.0),
-        INCHES(1.0 / 12.0); // 1 inch = 1/12 feet
+        INCHES(1.0 / 12.0),          // 1 inch = 1/12 feet
+        YARDS(3.0),                  // 1 yard = 3 feet
+        CENTIMETERS(0.0328084);      // 1 cm = 0.0328084 feet
 
         private final double toFeetFactor;
 
@@ -17,6 +21,7 @@ public class UC3 {
         }
     }
 
+    // SAME class as UC3 (no change)
     public static class Quantity {
         private final double value;
         private final LengthUnit unit;
@@ -29,12 +34,10 @@ public class UC3 {
             this.unit = unit;
         }
 
-        // Convert to base unit (feet)
         private double toFeet() {
             return unit.toFeet(value);
         }
 
-        // Override equals
         @Override
         public boolean equals(Object obj) {
             if (this == obj) return true;
@@ -49,9 +52,15 @@ public class UC3 {
 
     // Demo
     public static void main(String[] args) {
-        Quantity q1 = new Quantity(1.0, LengthUnit.FEET);
-        Quantity q2 = new Quantity(12.0, LengthUnit.INCHES);
 
-        System.out.println("1 ft == 12 inches ? " + q1.equals(q2));
+        Quantity q1 = new Quantity(1.0, LengthUnit.YARDS);
+        Quantity q2 = new Quantity(3.0, LengthUnit.FEET);
+
+        System.out.println("1 yard == 3 feet ? " + q1.equals(q2));
+
+        Quantity q3 = new Quantity(1.0, LengthUnit.CENTIMETERS);
+        Quantity q4 = new Quantity(0.393701, LengthUnit.INCHES);
+
+        System.out.println("1 cm == 0.393701 inches ? " + q3.equals(q4));
     }
 }
